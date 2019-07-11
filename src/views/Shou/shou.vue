@@ -1,12 +1,15 @@
 <template>
   <el-container class="shou">
-    <el-aside :width="Collapse?'64px':'200px'" class="ce">
-      <div class="log"></div>
+    <el-aside :width="collapse?'64px':'200px'" class="ce">
+      <!-- 切换log -->
+      <div class="log" :class="{close:collapse}"></div>
       <el-menu
         default-active="1"
         background-color="#002233"
         text-color="#fff"
         style="border-right:none"
+        :collapse='collapse'
+        :collapse-transition="false"
         active-text-color="#ffd04b"
       >
         <el-menu-item index="1">
@@ -66,7 +69,10 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
-      <el-main>Welcome</el-main>
+      <el-main>
+        <!-- 二级路由 -->
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -75,11 +81,13 @@
 export default {
   data () {
     return {
-      Collapse: false
+      // collapse的属性去控制false展开 ture收起
+      collapse: false
     }
   },
   methods: {
     toggleMenu () {
+      this.collapse = !this.collapse
     }
   }
 }
@@ -101,6 +109,11 @@ export default {
       background: url(../../assets/image/logo_admin.png) no-repeat center
         #002840;
     }
+    .close{
+          // background-image: url(../../assets/image/logo_admin_01.jpg);
+          background-image: url(../../assets/image/logo_admin_01.png);
+           background-size: 36px auto;
+        }
   }
   .header {
     border-bottom: 1px solid #dddd;
