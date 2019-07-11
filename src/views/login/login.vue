@@ -70,7 +70,7 @@ export default {
               console.log(data)
               // 登录成功之后跳转页面
               // 保存登录状态
-              this.$router.push('/')
+              this.$router.push('/Shou')
             }).catch(() => {
               this.$message.error('用户名或密码错误')
             })
