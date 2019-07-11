@@ -1,6 +1,6 @@
 <template>
   <el-container class="shou">
-    <el-aside width="200px" class="ce">
+    <el-aside :width="Collapse?'64px':'200px'" class="ce">
       <div class="log"></div>
       <el-menu
         default-active="1"
@@ -41,7 +41,7 @@
     </el-aside>
     <el-container>
       <el-header class="header">
-        <span class="el-icon-s-fold"></span>
+        <span class="el-icon-s-fold" @click="toggleMenu()"></span>
         <span class="txt">江苏传智播客教育科技有限公司</span>
         <!-- 下拉菜单 -->
         <el-dropdown style="float:right">
@@ -72,7 +72,17 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      Collapse: false
+    }
+  },
+  methods: {
+    toggleMenu () {
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
