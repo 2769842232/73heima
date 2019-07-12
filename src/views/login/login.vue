@@ -70,6 +70,11 @@ export default {
               console.log(data)
               // 登录成功之后跳转页面
               // 保存登录状态
+              /// --------------- ///保存会话状态
+              // 再本地存储token信息
+              // 保存登录状态  保存登录后返回的用户信息 包含token
+              // 使用sessionStorage 来储存 关闭浏览器 绘话失效
+              window.sessionStorage.setItem('tt', JSON.stringify(res.data.data))
               this.$router.push('/Shou')
             }).catch(() => {
               this.$message.error('用户名或密码错误')
