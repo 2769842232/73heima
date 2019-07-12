@@ -7,9 +7,11 @@
 <script>
 export default {
   created () {
-    this.axios.get('article').then((res) => {
-      console.log(res.data)
-    })
+    this.axios
+      .get('http://ttapi.research.itcast.cn/mp/v1_0/articles')
+      .then((res) => {
+        console.log(res.data)
+      })
   }
 }
 
