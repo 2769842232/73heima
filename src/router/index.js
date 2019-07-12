@@ -28,7 +28,7 @@ const router = new VueRouter({
 // 注册一个全局的前置导航守卫
 router.beforeEach((to, form, next) => {
   const user = window.sessionStorage.getItem('tt')
-  if (to.path !== '/login' && !user) { return next('/login') }
+  if (to.path !== '/login' && !user) return next('/login')
   next()
 })
 export default router

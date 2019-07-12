@@ -6,7 +6,13 @@
 
 <script>
 export default {
+  created () {
+    this.axios.get('article').then((res) => {
+      console.log(res.data)
+    })
+  }
 }
+
 </script>
 
 <style scoped lang="less">
