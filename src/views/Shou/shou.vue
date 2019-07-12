@@ -4,7 +4,7 @@
       <!-- 切换log -->
       <div class="log" :class="{close:collapse}"></div>
       <el-menu
-        default-active="1"
+        default-active="/Shou"
         background-color="#002233"
         text-color="#fff"
         style="border-right:none"
