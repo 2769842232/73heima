@@ -14,7 +14,7 @@ export default {
   .huan-center{
     img{
       display: block;
-      margin: 0 auto;
+      margin:  auto;
       text-align: center;
     }
 
