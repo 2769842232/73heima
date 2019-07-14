@@ -62,6 +62,7 @@ export default {
       // 该回调函数会在校验结束后被调用，并传入两个参数
       // ：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise
       this.$refs.loginForm.validate(async valid => {
+        // ------await关键字必须再async修饰的函数内使用--------//
         if (valid) {
           // // 如果验证成功 进行登录
           // this.axios
@@ -81,15 +82,16 @@ export default {
           //   }).catch(() => {
           //     this.$message.error('用户名或密码错误')
           //   })
-
+          // --------- await关键字必须再async修饰的函数内使用----//
           // 使用await 必须是再async下使用
           // 结合axios--async与await使用
-          try {
+          // try{业务逻辑} catch(err){业务逻辑失败调用catch,进行错误的处理}
+          try { // 业务逻辑
             const res = await
             this.axios.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
             window.sessionStorage.setItem('tt', JSON.stringify(res.data.data))
             this.$router.push('/Shou')
-          } catch (err) {
+          } catch (err) { // 进行错误的处理
             this.$message.error('用户名或密码错误')
           }
         }

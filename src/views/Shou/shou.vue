@@ -3,8 +3,9 @@
     <el-aside :width="collapse?'64px':'200px'" class="ce">
       <!-- 切换log -->
       <div class="log" :class="{close:collapse}"></div>
+      <!-- 高亮显示 -->
       <el-menu
-        default-active="/Shou"
+        :default-active="$route.path"
         background-color="#002233"
         text-color="#fff"
         style="border-right:none"
@@ -52,22 +53,28 @@
         <!-- 下拉菜单 -->
         <el-dropdown style="float:right">
           <span class="el-dropdown-link">
+            <!-- 取消原头像路径 绑定上属性 从token中获取到用户的头像 -->
             <img
-              src="../../assets/image/avatar.jpg"
+              :src="tu"
               alt
               width="35px"
               height="30px"
               style="vertical-align:middle"
+
             />
-            <b style="font-size: 15px; padding-left:10px;">小青</b>
+            <b style="font-size: 15px; padding-left:10px;">{{name}}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
+            <!-- 跳转到个人中心 -->
+            <el-dropdown-item @click.native="setting">
               <i class="el-icon-s-custom"></i>
               个人中心
             </el-dropdown-item>
-            <el-dropdown-item>
+            <!-- 他不是原生的dom 不一定支持原生的事件绑定
+              使用一个事件的修饰符 最默认行为@click.native 触发原生事件
+             -->
+            <el-dropdown-item @click.native="logout()">
               <i class="el-icon-setting"></i>
               退出登录
             </el-dropdown-item>
@@ -88,12 +95,32 @@ export default {
   data () {
     return {
       // collapse的属性去控制false展开 ture收起
-      collapse: false
+      collapse: false,
+      name: '',
+      tu: ''
     }
+  },
+  // 创建阶段
+  created () {
+    const user = JSON.parse(window.sessionStorage.getItem('tt'))
+    // 获取到用户名
+    this.name = user.name
+    // 获取到用户头像
+    this.tu = user.photo
   },
   methods: {
     toggleMenu () {
       this.collapse = !this.collapse
+    },
+    // 跳转到个人中心页面
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      // 退出登录
+      // 清楚token的数据
+      window.sessionStorage.removeItem('tt')
+      this.$router.push('/login')
     }
   }
 }
