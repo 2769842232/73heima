@@ -75,6 +75,7 @@ export default {
               // 保存登录状态  保存登录后返回的用户信息 包含token
               // 使用sessionStorage 来储存 关闭浏览器 绘话失效
               window.sessionStorage.setItem('tt', JSON.stringify(res.data.data))
+              // console.log(res.data.data)
               this.$router.push('/Shou')
             }).catch(() => {
               this.$message.error('用户名或密码错误')
