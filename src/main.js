@@ -11,6 +11,7 @@ import axios from './api/axios'
 // 使用插件 导包
 import components from './components'
 Vue.use(components)
+
 // 注册
 Vue.prototype.axios = axios
 
