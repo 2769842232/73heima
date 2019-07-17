@@ -24,10 +24,10 @@
 
         <!-- 频道 -->
         <el-form-item label="频道 :">
-          <!-- <my-channel v-model="reqParams.channel_id"></my-channel> -->
+          <my-channel v-model="reqParams.channel_id"></my-channel>
 
-          <!-- 语法糖原理 -->
-          <my-channel :value="reqParams.channel_id" @date="fn"></my-channel>
+          <!-- 方法1 语法糖原理 -->
+          <!-- <my-channel :value="reqParams.channel_id" @date="fn"></my-channel> -->
 
           <!-- <el-select v-model="reqParams.channel_id">
             <el-option
@@ -191,7 +191,7 @@ export default {
     // 编辑页面
     edit (id) {
       // 跳转到编辑页面
-      this.$router.push({ path: `/publish/${id}` })
+      this.$router.push({ path: '/publish/' + id })
     },
     // 删除功能
     del (id) {

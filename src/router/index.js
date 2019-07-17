@@ -5,6 +5,7 @@ import Shou from '../views/Shou/shou.vue'
 import Huan from '../views/welcome/huan.vue'
 import index from '../views/article/index.vue'
 import Images from '../views/images/images.vue'
+import Publish from '../views/publish/publish.vue'
 // 完成404页面
 import NotFound from '../views/404/index.vue'
 Vue.use(VueRouter)
@@ -20,7 +21,8 @@ const router = new VueRouter({
       children: [
         { name: 'huan', path: '/Shou', component: Huan },
         { name: 'index', path: '/article', component: index },
-        { name: 'Images', path: '/images', component: Images }
+        { name: 'Images', path: '/images', component: Images },
+        { name: 'publish', path: '/publish', component: Publish }
       ]
     },
     // 路由规则的最后

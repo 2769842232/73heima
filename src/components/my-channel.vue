@@ -37,7 +37,7 @@ export default {
   methods: {
     fn (value) {
       // 触发自定义时间 this.$emit()
-      this.$emit('date', value)
+      this.$emit('input', value)
     },
     async getData () {
       // 解构语法
