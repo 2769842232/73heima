@@ -1,7 +1,7 @@
 <template>
   <div class="center">
     <el-card>
-      <div slot="header">
+      <div slot="header" class="clearfix">
         <!-- 面包屑封装 -->
         <my-bread>内容管理</my-bread>
         <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -24,19 +24,26 @@
 
         <!-- 频道 -->
         <el-form-item label="频道 :">
-          <el-select v-model="reqParams.channel_id">
+          <!-- <my-channel v-model="reqParams.channel_id"></my-channel> -->
+
+          <!-- 语法糖原理 -->
+          <my-channel :value="reqParams.channel_id" @date="fn"></my-channel>
+
+          <!-- <el-select v-model="reqParams.channel_id">
             <el-option
               v-for="item in channelOptions"
               :key="item.id"
               :label="item.name"
               :value="item.id"
             ></el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
 
         <!-- 日期控件 -->
         <el-form-item label="时间 :">
           <el-date-picker
+          value-format='yyyy-MM-dd'
+            @change="changeDate"
             v-model="dateValues"
             type="daterange"
             range-separator="至"
@@ -47,7 +54,7 @@
 
         <!-- 筛选按钮 -->
         <el-form-item>
-          <el-button type="primary">筛选</el-button>
+          <el-button @click="search()" type="primary">筛选</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -82,7 +89,8 @@
            vue新版本的插槽语法 v-solt:插槽的名字='作用域数据'  v-solt:fot='ying'
         </my-test>-->
         根据筛选条件共查询到
-        <b>{{total}}</b>条结果:
+        <b>{{total}}</b>
+        条结果:
       </div>
       <!-- 定义获取文章列表的属性 -->
       <el-table :data="articles">
@@ -108,15 +116,25 @@
             <el-tag v-if="scope.row.status==4" type="danger">已删除</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="发布时间" prop='pubdate'></el-table-column>
+        <el-table-column label="发布时间" prop="pubdate"></el-table-column>
         <el-table-column label="操作" width="120px">
-            <el-button type="primary" icon="el-icon-edit" circle  plain></el-button>
-             <el-button type="danger" icon="el-icon-delete" circle  plain></el-button>
+          <template slot-scope="scope">
+            <el-button type="primary" icon="el-icon-edit" circle plain @click="edit(scope.row.id)"></el-button>
+            <!-- 删除功能 -->
+            <el-button type="danger" icon="el-icon-delete" circle plain @click="del(scope.row.id)"></el-button>
+          </template>
         </el-table-column>
       </el-table>
       <!------------ 完成分页器 ----------------->
       <div class="box" style="text-align:center">
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination
+          background
+          :current-change="reqParams.page"
+          :page-size="reqParams.per_page"
+          @current-change="dian"
+          layout="prev, pager, next"
+          :total="total"
+        ></el-pagination>
       </div>
     </el-card>
   </div>
@@ -130,47 +148,92 @@ export default {
       // 提交给后台筛选条件 传参
       // 数据默认是'' 还是null的区别 如果是null 将不会发送字段
       reqParams: {
+        page: 1,
+        per_page: 20,
         status: null, // 文章状态
         channel_id: null, // 频道id
         begin_pubdate: null, // 起始时间
         end_pubdate: null // 结束时间
       },
-      // 获取频道的信息
-      channelOptions: [],
+      // // 获取频道的信息
+      // channelOptions: [],
       // 表单控件的数据
       dateValues: [],
       // 文章列表
-      articles: []
+      articles: [],
+      // 总条数
+      total: 0
     }
   },
   created () {
     // 创建阶段
     // 获取频道信息列表
-    this.getChanneLoptions()
+    // this.getChanneLoptions()
     // 获取列表数据
     this.getArticles()
   },
   methods: {
+    fn (value) {
+      this.reqParams.channel_id = value
+    },
+    changeDate (values) {
+      // 再选择了时间后 获取当前选择的时间的数据(begin,end)
+      // 起始时间
+      this.reqParams.begin_pubdate = values[0]
+      // 结束时间
+      this.reqParams.end_pubdate = values[1]
+    },
+    // 筛选功能
+    search () {
+      // 点击筛选的时候重新刷新列表数据
+      this.getArticles()
+    },
+    // 编辑页面
+    edit (id) {
+      // 跳转到编辑页面
+      this.$router.push({ path: `/publish/${id}` })
+    },
+    // 删除功能
+    del (id) {
+      this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await this.axios.delete(
+          `http://ttapi.research.itcast.cn/mp/v1_0/articles/${id}`
+        )
+        this.getArticles()
+      })
+      // console.log(this.results.id)
+    },
+    // 分页器点击
+    dian (newPage) {
+      // newPage 当前点击的按钮的页码
+      // 更新提交后台的参数
+      this.reqParams.page = newPage // 点击完将数据的页码传入到newPage中
+      this.getArticles() // 重新渲染文章列表
+    },
     // 获取频道列表
     // await关键字必须再acync函数内部使用 否则报错
-    async getChanneLoptions () {
-      // 解构语法
-      const {
-        data: { data }
-      } = await this.axios.get(
-        'http://ttapi.research.itcast.cn/mp/v1_0/channels'
-      )
-      this.channelOptions = data.channels
-    },
+    // async getChanneLoptions () {
+    //   // 解构语法
+    //   const {
+    //     data: { data }
+    //   } = await this.axios.get(
+    //     'http://ttapi.research.itcast.cn/mp/v1_0/channels'
+    //   )
+    //   this.channelOptions = data.channels
+    // },
     // 获取列表数据
     async getArticles () {
       // get传参 axios.get('url',{params:{参数对象}})
       const {
         data: { data }
-      } = await this.axios.get('articles', { params: this.reqParams })
+      } = await this.axios.get('/articles', { params: this.reqParams })
       this.articles = data.results
-      this.total = data.total_count
       console.log(data.results)
+      this.total = data.total_count
     }
   }
 }

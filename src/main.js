@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router/index'
 
 import axios from './api/axios'
+// 引入上传的全局样式
+import '../src/style/css/index.less'
 
 // 使用插件 导包
 import components from './components'

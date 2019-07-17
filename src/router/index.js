@@ -4,6 +4,7 @@ import Login from '../views/login/login.vue'
 import Shou from '../views/Shou/shou.vue'
 import Huan from '../views/welcome/huan.vue'
 import index from '../views/article/index.vue'
+import Images from '../views/images/images.vue'
 // 完成404页面
 import NotFound from '../views/404/index.vue'
 Vue.use(VueRouter)
@@ -18,7 +19,8 @@ const router = new VueRouter({
       component: Shou,
       children: [
         { name: 'huan', path: '/Shou', component: Huan },
-        { name: 'index', path: '/article', component: index }
+        { name: 'index', path: '/article', component: index },
+        { name: 'Images', path: '/images', component: Images }
       ]
     },
     // 路由规则的最后
