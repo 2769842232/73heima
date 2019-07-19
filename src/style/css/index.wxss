@@ -25,3 +25,12 @@
   height: 178px;
   display: block;
 }
+.ql-editor {
+  padding: 10px 20px;
+}
+.ql-editor {
+  height: 300px;
+}
+.el-dialog__footer {
+  text-align: center;
+}

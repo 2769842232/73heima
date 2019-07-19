@@ -4,6 +4,9 @@
 import MyBread from '../components/MyBread.vue'
 // 封装频道信息
 import MyChannel from '../components/my-channel.vue'
+
+// 封装发布文章中的上传图片登
+import MYImage from '../components/my-image.vue'
 // 封装成插件的形式 Vue.use (插件)执行插件的配置对象中install函数且传入Vue对象
 export default {
   install (Vue) {
@@ -14,5 +17,8 @@ export default {
     Vue.component(MyBread.name, MyBread)
     // 封装频道信息
     Vue.component(MyChannel.name, MyChannel)
+
+    // 封装发布文章中的上传图片登
+    Vue.component(MYImage.name, MYImage)
   }
 }

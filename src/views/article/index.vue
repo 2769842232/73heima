@@ -191,7 +191,8 @@ export default {
     // 编辑页面
     edit (id) {
       // 跳转到编辑页面
-      this.$router.push({ path: '/publish/' + id })
+      this.$router.push({ path: '/publish?id=' + id })
+      // this.$router.push({ path: '/publish', query: { id } })
     },
     // 删除功能
     del (id) {
