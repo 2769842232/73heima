@@ -93,7 +93,10 @@ export default {
   },
   watch: {
     $route () {
-      this.articleId = this.$route.query.id
+      // 当传参改变的时候 触发这个函数
+      // 正常显示布局组件
+      // 修改文章的时候 跳转到修改文章 当点击发布文章的时候 再跳转到发布文章
+      this.articleId = null
       this.articleForm = {
         title: '',
         content: '',

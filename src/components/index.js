@@ -4,6 +4,9 @@
 import MyBread from '../components/MyBread.vue'
 // 封装频道信息
 import MyChannel from '../components/my-channel.vue'
+// 非父子传值
+import Mycoma from './mycoma.vue'
+import Mycomb from './mycomb.vue'
 
 // 封装发布文章中的上传图片登
 import MYImage from '../components/my-image.vue'
@@ -20,5 +23,8 @@ export default {
 
     // 封装发布文章中的上传图片登
     Vue.component(MYImage.name, MYImage)
+    // 非父子传值练习
+    Vue.component(Mycoma.name, Mycoma)
+    Vue.component(Mycomb.name, Mycomb)
   }
 }

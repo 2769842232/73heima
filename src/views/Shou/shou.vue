@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import eventBus from '../../eventBus/index'
 export default {
   data () {
     return {
@@ -107,6 +108,14 @@ export default {
     this.name = user.name
     // 获取到用户头像
     this.tu = user.photo
+    // 需要再shou组件绑定 绑定事件
+    eventBus.$on('userHeaderName', (name) => {
+      this.name = name
+    })
+    // 绑定事件
+    eventBus.$on('userHeaderPhoto', (photo) => {
+      this.tu = photo
+    })
   },
   methods: {
     toggleMenu () {
